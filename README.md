@@ -5,6 +5,7 @@ How to use?
 
 GET method:
 
+```java
   Map<String,String> params = new HashMap<String, String>();
   params.put(KEY_USERNAME,username);
   params.put(KEY_PASSWORD,password);
@@ -21,9 +22,10 @@ GET method:
               Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
           }
       });
-      
-POST method:
+```
 
+POST method:
+```java
   Map<String,String> params = new HashMap<String, String>();
   params.put(KEY_USERNAME,username);
   params.put(KEY_PASSWORD,password);
@@ -40,3 +42,4 @@ POST method:
               Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
           }
       });
+```

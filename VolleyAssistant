@@ -1,0 +1,59 @@
+package com.asfwan.visitappvolleyassistance;
+
+import android.content.Context;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.Map;
+
+/**
+ * Created by asfwan on 30/05/2017.
+ */
+
+public class VolleyAssistant {
+
+    private Context context;
+
+    public VolleyAssistant(Context context){
+        this.context = context;
+    }
+
+    public static VolleyAssistant init(Context context){
+        return new VolleyAssistant(context);
+    }
+
+    public void Get(String url,final Map<String,String> params,Response.Listener onResponse,Response.ErrorListener onError){
+        // create StringRequest, setting GET method for communication
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, onResponse, onError){
+            @Override
+            protected Map<String,String> getParams(){
+                // simply return the params passed from the outer functions
+                return params;
+            }
+        };
+        // create new RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        // add the stringRequest to it
+        requestQueue.add(stringRequest);
+    }
+
+    public void Post(String url,final Map<String,String> params,Response.Listener onResponse,Response.ErrorListener onError){
+        // create StringRequest, setting POST method for communication
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, onResponse, onError){
+            @Override
+            protected Map<String,String> getParams(){
+                // simply return the params passed from the outer functions
+                return params;
+            }
+        };
+        // create new RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        // add the stringRequest to it
+        requestQueue.add(stringRequest);
+    }
+
+}

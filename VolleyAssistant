@@ -47,14 +47,10 @@ public class VolleyAssistant {
     }
 
     public void Post(String url,final Map<String,String> params,Response.Listener<JSONObject> onResponse,Response.ErrorListener onError){
+        // convert HashMap to JSONObject
+        JSONObject jsonParams = new JSONObject(params);
         // create JsonObjectRequest, setting POST method for communication
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,url,new JSONObject(params),onResponse,onError){
-            @Override
-            protected Map<String,String> getParams(){
-                // simply return the params passed from the outer functions
-                return params;
-            }
-        };
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,url,jsonParams,onResponse,onError);
         // create new RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         // add the stringRequest to it

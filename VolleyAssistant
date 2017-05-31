@@ -2,12 +2,17 @@ package com.asfwan.visitappvolleyassistance;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,7 +46,23 @@ public class VolleyAssistant {
         requestQueue.add(stringRequest);
     }
 
-    public void Post(String url,final Map<String,String> params,Response.Listener onResponse,Response.ErrorListener onError){
+    public void Post(String url,final Map<String,String> params,Response.Listener<JSONObject> onResponse,Response.ErrorListener onError){
+        // create JsonObjectRequest, setting POST method for communication
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,url,new JSONObject(params),onResponse,onError){
+            @Override
+            protected Map<String,String> getParams(){
+                // simply return the params passed from the outer functions
+                return params;
+            }
+        };
+        // create new RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        // add the stringRequest to it
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    // The old Post method
+    public void sPost(String url,final Map<String,String> params,Response.Listener onResponse,Response.ErrorListener onError){
         // create StringRequest, setting POST method for communication
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, onResponse, onError){
             @Override
@@ -50,6 +71,7 @@ public class VolleyAssistant {
                 return params;
             }
         };
+
         // create new RequestQueue
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         // add the stringRequest to it
